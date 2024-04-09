@@ -7,7 +7,7 @@ fake = Faker()
 
 num_rows = 3500
 
-headers = ["Filial", "Documento", "Nome_Cliente", "Nome_Vendedor", "Produtos", "Quantidade", "Preco_Unitario", "Total", "Estado_Cliente", "Data_Compra", "Data_Devolucao"]
+headers = ["Filial", "Documento", "Nome_Cliente", "Nome_Vendedor", "Produtos", "Quantidade", "Preco_Unitario", "Total", "Estado_Cliente", "Data_Compra", "Data_Devolucao", "Status"]
 
 FILIAL = [
     "São Paulo",
@@ -88,7 +88,6 @@ ESTADO = [
     "TO"
 ]
 
-
 with open("input.csv", "w", newline="") as csvfile:
     writer = csv.writer(csvfile)
     writer.writerow(headers)
@@ -109,14 +108,17 @@ with open("input.csv", "w", newline="") as csvfile:
         Total = Preco_Unitario * Quantidade
         Estado_Cliente = random.choice(ESTADO)
 
+
         # Verifica se a transação deve ter uma devolução
         if random.random() < 0.33:
             # Adiciona uma data de devolução aleatória até 30 dias após a data de compra
             data_devolucao = fake.date_between_dates(date_start=date, date_end=date + datetime.timedelta(days=30))
             # Calcula o valor da transação de devolução (33% do valor total da compra)
             valor_devolucao = Total * 0.33
+            Status = "Com Devolução"
         else:
             data_devolucao = ""
             valor_devolucao = ""
+            Status = "Sem Devolução"
 
-        writer.writerow([Filial, Documento, Nome_Cliente, Nome_Vendedor, Produto["nome"], Quantidade, Preco_Unitario, Total, Estado_Cliente , date, data_devolucao])
+        writer.writerow([Filial, Documento, Nome_Cliente, Nome_Vendedor, Produto["nome"], Quantidade, Preco_Unitario, Total, Estado_Cliente , date, data_devolucao, Status])
