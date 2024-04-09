@@ -88,6 +88,7 @@ ESTADO = [
     "TO"
 ]
 
+
 with open("input.csv", "w", newline="") as csvfile:
     writer = csv.writer(csvfile)
     writer.writerow(headers)
