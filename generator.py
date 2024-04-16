@@ -5,14 +5,17 @@ import csv
 
 fake = Faker()
 
-num_rows = 3500
+num_rows = 10500
 
 headers = ["Filial", "Documento", "Nome_Cliente", "Nome_Vendedor", "Produtos", "Quantidade", "Preco_Unitario", "Total", "Estado_Cliente", "Data_Compra", "Data_Devolucao", "Status"]
 
 FILIAL = [
     "São Paulo",
-    "Parana",
+    "Curitiba",
     "Rio de Janeiro",
+    "Salvador"
+    "Fortaleza"
+    "Belo Horizonte"
 ]
 
 VENDEDOR = [
@@ -22,6 +25,10 @@ VENDEDOR = [
     "Maria",
     "Taize",
     "Henrique",
+    "Pedro",
+    "Tatiana",
+    "Adriane",
+    "Graciele",
 ]
 
 CLIENTE = [
@@ -95,7 +102,7 @@ with open("input.csv", "w", newline="") as csvfile:
     for i in range(num_rows):
         date = fake.date_between_dates(
             date_start=datetime.date(2020, 1, 1),
-            date_end=datetime.date(2024, 12, 31)
+            date_end=datetime.date(2028, 12, 31)
         )
 
         Filial = random.choice(FILIAL)
@@ -110,11 +117,11 @@ with open("input.csv", "w", newline="") as csvfile:
 
 
         # Verifica se a transação deve ter uma devolução
-        if random.random() < 0.33:
+        if random.random() < 0.23:
             # Adiciona uma data de devolução aleatória até 30 dias após a data de compra
             data_devolucao = fake.date_between_dates(date_start=date, date_end=date + datetime.timedelta(days=30))
-            # Calcula o valor da transação de devolução (33% do valor total da compra)
-            valor_devolucao = Total * 0.33
+            # Calcula o valor da transação de devolução (23% do valor total da compra)
+            valor_devolucao = Total * 0.23
             Status = "Com Devolução"
         else:
             data_devolucao = ""
